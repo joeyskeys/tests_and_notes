@@ -16,6 +16,9 @@ struct HanaStruct {
 };
 
 // We still get the advantage of compiler optimization when possible
+// But in debug build this method is about 10x slower than the plain
+// method, need to test on runtime string when optimization cannot be
+// performed
 void* get_hana_member(HanaStruct& hstruct, const std::string& dst) {
     void* ret = nullptr;
     hana::for_each(hana::accessors<HanaStruct>(), hana::fuse([&](auto name, auto accessor) {
@@ -44,6 +47,8 @@ void* get_plain_member_with_comparison(PlainStruct& pstruct, const std::string& 
     return nullptr;
 }
 
+// offsetof macro is sensitive to memory layout in this test will crash
+// on Debug build, and no performance advantage over the previous method
 void* get_plain_member_with_offset(PlainStruct& pstruct, const std::string& dst) {
     if (dst == "a")
         return &pstruct + offsetof(PlainStruct, a);
