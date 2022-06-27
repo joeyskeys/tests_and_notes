@@ -13,3 +13,4 @@ endif(WIN32)
 
 add_subdirectory(benchmark_framework)
 add_subdirectory(cpp_self_introspection)
+add_subdirectory(eigen_related)
