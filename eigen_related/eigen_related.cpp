@@ -4,10 +4,23 @@
 
 class Vec3f : public Eigen::Matrix<float, 3, 1> {
 public:
+    using Base = Eigen::Matrix<float, 3, 1>;
 
+    template <typename ...Ts, typename = std::enable_if_t<sizeof...(Ts) == 3 && (... && std::is_arithmetic_v<Ts>)>>
+    Vec3f(Ts... args) : Base(static_cast<float>(args)...) {}
+
+    template <typename Derived>
+    Vec3f(const Eigen::MatrixBase<Derived>& p) : Base(p) {}
+
+    template <typename Derived>
+    Vec3f &operator =(const Eigen::MatrixBase<Derived>& p) {
+        this->Base::operator=(p);
+        return *this;
+    }
 };
 
-Vec3f normalize(const Vec3f& v) {
+template <typename Derived>
+auto normalize(const Eigen::MatrixBase<Derived>& v) {
     return v.normalized();
 }
 
