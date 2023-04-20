@@ -1,5 +1,6 @@
-import sys
-sys.path.append('/home/joeys/Desktop/repos/tests_and_notes/build/pybind11_usage')
+import sys, os
+p = os.path.abspath(os.path.join(os.path.dirname(__file__), '../build/pybind11_usage'))
+sys.path.append(p)
 
 import with_tbb as wt
 
@@ -14,9 +15,6 @@ class Cat(wt.Animal):
 
 
 if __name__ == '__main__':
-    zoo = wt.Zoo()
-    for i in range(6):
-        zoo.add_animal(Dog())
-        zoo.add_animal(Cat())
-
+    dog = Dog()
+    zoo = wt.Zoo(dog)
     zoo.make_noises()
