@@ -5,12 +5,19 @@
 
 class Vec3f : public Eigen::Matrix<float, 3, 1> {
 public:
+    using Base = Eigen::Matrix<float, 3, 1>;
 
-};
+    template <typename ...Ts, typename = std::enable_if_t<sizeof...(Ts) == 3 && (... && std::is_arithmetic_v<Ts>)>>
+    Vec3f(Ts... args) : Base(static_cast<float>(args)...) {}
 
-class Mat3f : public Eigen::Matrix<float, 3, 3> {
-public:
+    template <typename Derived>
+    Vec3f(const Eigen::MatrixBase<Derived>& p) : Base(p) {}
 
+    template <typename Derived>
+    Vec3f &operator =(const Eigen::MatrixBase<Derived>& p) {
+        this->Base::operator=(p);
+        return *this;
+    }
 };
 
 template <typename Derived>
