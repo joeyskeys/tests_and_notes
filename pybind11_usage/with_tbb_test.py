@@ -18,3 +18,4 @@ if __name__ == '__main__':
     dog = Dog()
     zoo = wt.Zoo(dog)
     zoo.make_noises()
+    print('end of python code')
