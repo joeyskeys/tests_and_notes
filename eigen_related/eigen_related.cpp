@@ -1,13 +1,25 @@
 #include <iostream>
 
 #include <Eigen/Core>
+#include <Eigen/Geometry>
 
 class Vec3f : public Eigen::Matrix<float, 3, 1> {
 public:
 
 };
 
-Vec3f normalize(const Vec3f& v) {
+class Mat3f : public Eigen::Matrix<float, 3, 3> {
+public:
+
+};
+
+template <typename Derived>
+Mat3f translate(const Eigen::MatrixBase<Derived>& v) {
+
+}
+
+template <typename Derived>
+Vec3f normalize(const Eigen::MatrixBase<Derived>& v) {
     return v.normalized();
 }
 
